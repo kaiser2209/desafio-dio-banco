@@ -16,5 +16,6 @@ public class Main {
         banco.getContas().add(corrente);
         banco.getContas().add(poupanca);
         System.out.println(banco);
+        System.out.println(banco.searchConta(1, Conta.Tipo.POUPANCA, 2, 3));
     }
 }

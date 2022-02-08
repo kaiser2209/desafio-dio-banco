@@ -18,4 +18,8 @@ public class Utils {
         return 10 - (soma % 10);
 
     }
+
+    public static boolean isContaValida(Integer agencia, Conta.Tipo tipo, Integer numeroConta, Integer dv) {
+        return getDigitoVerificador(agencia, tipo, numeroConta) == dv;
+    }
 }

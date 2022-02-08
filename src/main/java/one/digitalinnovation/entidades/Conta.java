@@ -4,6 +4,8 @@ import one.digitalinnovation.exceptions.SaldoInsuficienteException;
 import one.digitalinnovation.interfaces.IConta;
 import one.digitalinnovation.util.Utils;
 
+import java.util.Objects;
+
 public abstract class Conta implements IConta {
     public enum Tipo {
         CORRENTE(1),
@@ -56,7 +58,6 @@ public abstract class Conta implements IConta {
     }
 
     public String getNumero() {
-
         return String.format("%05d", numero) + "-" + Utils.getDigitoVerificador(agencia, tipo, numero);
     }
 
@@ -78,5 +79,22 @@ public abstract class Conta implements IConta {
                 "Tipo: " + this.tipo + "\n" +
                 "Titular: " + this.cliente.getNome() + "\n" +
                 "Saldo: R$ " + String.format("%.2f", this.saldo);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Conta conta = (Conta) o;
+        return agencia == conta.agencia && numero == conta.numero  && tipo == conta.tipo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(agencia, numero, tipo);
+    }
+
+    public boolean igual(int agencia, Tipo tipo, int numero) {
+        return this.agencia == agencia && this.tipo == tipo && this.numero == numero;
     }
 }

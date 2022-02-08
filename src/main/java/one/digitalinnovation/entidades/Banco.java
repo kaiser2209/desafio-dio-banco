@@ -1,5 +1,8 @@
 package one.digitalinnovation.entidades;
 
+import one.digitalinnovation.exceptions.ContaInvalidaException;
+import one.digitalinnovation.util.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,5 +32,23 @@ public class Banco {
         retorno += "]";
 
         return retorno;
+    }
+
+    public Conta searchConta(int agencia, Conta.Tipo tipo, int numero, int dv) {
+        if (Utils.isContaValida(agencia, tipo, numero, dv)) {
+            return getConta(agencia, tipo, numero);
+        } else {
+            throw new ContaInvalidaException("A conta informada não é válida!");
+        }
+    }
+
+    private Conta getConta(int agencia, Conta.Tipo tipo, int numero) {
+        for(Conta c : this.contas) {
+            if (c.igual(agencia, tipo, numero)) {
+                return c;
+            }
+        }
+
+        return null;
     }
 }
